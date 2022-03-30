@@ -10,6 +10,7 @@ import sqlite.TableField;
 import sqlite.TableForeignKey;
 
 public class Afazer extends Base {
+	private static boolean alreadyLoadedTable = false;
 
 	private String tableName = "afazer";
 	
@@ -32,7 +33,10 @@ public class Afazer extends Base {
 	}
 	
 	public Afazer() {
-		this.createTable(schema());
+		if (!alreadyLoadedTable) {
+			alreadyLoadedTable = true;
+			this.createTable(schema());
+		}	
 	}
 	
 	public Afazer(Integer id, String descricao, boolean concluido, Integer pessoaId) {

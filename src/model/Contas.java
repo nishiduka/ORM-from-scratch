@@ -11,6 +11,7 @@ import sqlite.TableField;
 import sqlite.TableForeignKey;
 
 public class Contas extends Base {
+	private static boolean alreadyLoadedTable = false;
 	private static String tableName = "contas"; 
 	
 	private Integer id;
@@ -32,7 +33,10 @@ public class Contas extends Base {
 	}
 	
 	public Contas() {
-		this.createTable(schema());
+		if (!alreadyLoadedTable) {
+			alreadyLoadedTable = true;
+			this.createTable(schema());
+		}	
 	}
 	
 	public Contas(Integer id, double valor, String descricao, Integer donoId) {

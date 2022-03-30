@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 
 public class ConnectionDB {
     private static boolean logs = false;
+    private static boolean inMemory = false;
 	
 	private static Connection conn = null;
 	
@@ -16,12 +17,14 @@ public class ConnectionDB {
         try {
         	String dir = System.getProperty("user.dir");
 
-//            String url = "jdbc:sqlite::memory:";
-            String url = 
-            		String.format(
-            			"jdbc:sqlite:%s" + "database.db", 
-            			dir + "/src/Data/"
-    				);
+           String url = String.format(
+                            "jdbc:sqlite:%s" + "database.db", 
+                            dir + "/src/Data/"
+    				    );
+
+           if (inMemory) {
+                url = "jdbc:sqlite::memory:";
+           }
 
             if (conn == null) {
             	conn = DriverManager.getConnection(url);
